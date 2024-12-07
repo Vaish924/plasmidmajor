@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Registration Form Validation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper" style="background-image: url('images/bg-registration-form-2.jpg');">
+        <div class="inner">
+            <form id="registrationForm" action="https://formsubmit.co/patilvaish20@gmail.com" method="POST">
+                <!-- Hidden fields for FormSubmit configuration -->
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="New Registration Form Submission">
+                <input type="hidden" name="_template" value="table">
+
+                <h3>Registration Form</h3>
+                <div class="form-group">
+                    <div class="form-wrapper">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="First Name" class="form-control">
+                        <span class="error" id="firstNameError"></span>
+                    </div>
+                    <div class="form-wrapper">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="Last Name" class="form-control">
+                        <span class="error" id="lastNameError"></span>
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="Email" class="form-control">
+                    <span class="error" id="emailError"></span>
+                </div>
+                <div class="form-wrapper">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="Phone Number" class="form-control">
+                    <span class="error" id="phoneError"></span>
+                </div>
+                <div class="form-wrapper">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="Password" class="form-control">
+                    <span class="error" id="passwordError"></span>
+                </div>
+                <div class="form-wrapper">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="Confirm Password" class="form-control">
+                    <span class="error" id="confirmPasswordError"></span>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="terms" name="Terms Accepted"> I accept the Terms of Use & Privacy Policy.
+                        <span class="checkmark"></span>
+                    </label>
+                    <span class="error" id="termsError"></span>
+                </div>
+                <button type="submit" id="submitBtn">Register Now</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", function () {
+            let isValid = true;
+
+            // Clear previous errors
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+
+            // First Name Validation
+            const firstName = document.getElementById("firstName").value;
+            if (firstName.length < 5) {
+                document.getElementById("firstNameError").textContent = "First name must be at least 5 characters.";
+                isValid = false;
+            }
+
+            // Last Name Validation
+            const lastName = document.getElementById("lastName").value;
+            if (lastName.length < 5) {
+                document.getElementById("lastNameError").textContent = "Last name must be at least 5 characters.";
+                isValid = false;
+            }
+
+            // Email Validation
+            const email = document.getElementById("email").value;
+            if (!email.includes("@")) {
+                document.getElementById("emailError").textContent = "Enter a valid email.";
+                isValid = false;
+            }
+
+            // Phone Number Validation
+            const phone = document.getElementById("phone").value;
+            if (phone === "123456789" || phone.length !== 10 || isNaN(phone)) {
+                document.getElementById("phoneError").textContent = "Enter a valid 10-digit phone number.";
+                isValid = false;
+            }
+
+            // Password Validation
+            const password = document.getElementById("password").value;
+            if (password.length < 8 || password.toLowerCase() === "password") {
+                document.getElementById("passwordError").textContent = "Password must be at least 8 characters and cannot be 'password'.";
+                isValid = false;
+            }
+
+            // Confirm Password Validation
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            if (confirmPassword !== password) {
+                document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+                isValid = false;
+            }
+
+            // Terms Validation
+            const termsChecked = document.getElementById("terms").checked;
+            if (!termsChecked) {
+                document.getElementById("termsError").textContent = "You must accept the terms.";
+                isValid = false;
+            }
+
+            // If form is valid
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
